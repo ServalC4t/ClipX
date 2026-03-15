@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ClipX セットアップ</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0d0d0d; --bg1: #141414; --bg2: #1a1a1a;
+  --border: #222; --text1: #e0e0e0; --text2: #888; --text3: #555;
+  --accent: #1d9e75; --accent-dim: #0a1f18; --accent-border: #1a3a2a;
+  --danger: #e24b4a;
+}
+html, body { height: 100%; background: var(--bg); color: var(--text1); font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 13px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+.setup-box {
+  width: 420px;
+  background: var(--bg1);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-mark {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -1px;
+}
+.logo-name { font-size: 18px; color: var(--text1); letter-spacing: 0.02em; }
+
+.setup-desc { font-size: 12px; color: var(--text2); line-height: 1.7; }
+
+/* ステップリスト */
+.steps { display: flex; flex-direction: column; gap: 8px; }
+.step { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: 7px; }
+.step-icon { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; color: var(--text3); transition: all 0.3s; }
+.step-icon.active { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
+.step-icon.done { border-color: var(--accent); background: var(--accent); color: #fff; }
+.step-icon.error { border-color: var(--danger); background: #1f0a0a; color: var(--danger); }
+.step-label { flex: 1; font-size: 12px; color: var(--text2); }
+.step-label.active { color: var(--text1); }
+.step-label.done { color: var(--text2); }
+.step-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+/* プログレスバー */
+.progress-wrap { display: flex; flex-direction: column; gap: 6px; }
+.progress-bar-bg { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 4px; height: 5px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; width: 0%; transition: width 0.3s ease; }
+.progress-text { font-size: 11px; color: var(--text3); display: flex; justify-content: space-between; }
+
+/* ボタン */
+.btn { border-radius: 7px; font-size: 12px; padding: 9px 20px; cursor: pointer; border: none; font-family: inherit; width: 100%; }
+.btn-primary { background: var(--accent); color: #fff; font-weight: 500; }
+.btn-primary:hover { opacity: 0.85; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-ghost { background: var(--bg2); border: 0.5px solid var(--border); color: var(--text2); margin-top: 4px; }
+.btn-ghost:hover { border-color: #333; color: var(--text1); }
+
+/* エラー */
+.error-box { background: #1f0a0a; border: 0.5px solid #5a1a1a; border-radius: 7px; padding: 12px; font-size: 11px; color: var(--danger); line-height: 1.7; display: none; }
+
+/* 完了メッセージ */
+.done-msg { text-align: center; color: var(--accent); font-size: 13px; display: none; }
+.done-msg svg { display: block; margin: 0 auto 8px; }
+</style>
+</head>
+<body>
+<div class="setup-box">
+  <div class="logo">
+    <div class="logo-mark">CX</div>
+    <span class="logo-name">ClipX</span>
+  </div>
+
+  <div class="setup-desc">
+    動画変換エンジン <strong style="color:var(--text1)">FFmpeg</strong> が必要です。<br>
+    自動でダウンロード・インストールします（約 80MB）。
+  </div>
+
+  <div class="steps">
+    <div class="step" id="step-download">
+      <div class="step-icon" id="icon-download">1</div>
+      <div class="step-label" id="label-download">
+        ダウンロード
+        <div class="step-sub" id="sub-download">ffmpeg-release-essentials.zip</div>
+      </div>
+    </div>
+    <div class="step" id="step-extract">
+      <div class="step-icon" id="icon-extract">2</div>
+      <div class="step-label" id="label-extract">
+        展開
+        <div class="step-sub">PowerShell Expand-Archive</div>
+      </div>
+    </div>
+    <div class="step" id="step-install">
+      <div class="step-icon" id="icon-install">3</div>
+      <div class="step-label" id="label-install">
+        インストール
+        <div class="step-sub" id="sub-install">AppData\Local\ClipX\ffmpeg\</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-wrap" id="progress-wrap" style="display:none;">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+    <div class="progress-text">
+      <span id="progress-msg">準備中...</span>
+      <span id="progress-pct">0%</span>
+    </div>
+  </div>
+
+  <div class="error-box" id="error-box"></div>
+
+  <div class="done-msg" id="done-msg">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent)"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+    インストール完了！ClipX を起動します
+  </div>
+
+  <div>
+    <button class="btn btn-primary" id="btn-start">インストール開始</button>
+    <button class="btn btn-ghost" id="btn-skip">スキップ（後で手動インストール）</button>
+  </div>
+</div>
+
+<script>
+const { ipcRenderer } = require('electron');
+
+const btnStart = document.getElementById('btn-start');
+const btnSkip = document.getElementById('btn-skip');
+const progressWrap = document.getElementById('progress-wrap');
+const progressFill = document.getElementById('progress-fill');
+const progressMsg = document.getElementById('progress-msg');
+const progressPct = document.getElementById('progress-pct');
+const errorBox = document.getElementById('error-box');
+const doneMsg = document.getElementById('done-msg');
+
+const STEPS = {
+  downloading: { step: 'download', label: 'ダウンロード中...' },
+  extracting:  { step: 'extract',  label: '展開中...' },
+  installing:  { step: 'install',  label: 'インストール中...' },
+  done:        { step: 'install',  label: '完了' }
+};
+
+function setStepState(stepId, state) {
+  const icon = document.getElementById('icon-' + stepId);
+  const label = document.getElementById('label-' + stepId);
+  icon.className = 'step-icon ' + state;
+  if (label) label.className = 'step-label ' + state;
+  if (state === 'done') icon.textContent = '✓';
+  if (state === 'error') icon.textContent = '✕';
+}
+
+ipcRenderer.on('ffmpeg-setup-status', (_, { stage, progress, message }) => {
+  progressWrap.style.display = '';
+  progressFill.style.width = progress + '%';
+  progressMsg.textContent = message;
+  progressPct.textContent = progress + '%';
+
+  if (stage === 'downloading') {
+    setStepState('download', 'active');
+  } else if (stage === 'extracting') {
+    setStepState('download', 'done');
+    setStepState('extract', 'active');
+  } else if (stage === 'installing') {
+    setStepState('download', 'done');
+    setStepState('extract', 'done');
+    setStepState('install', 'active');
+  } else if (stage === 'done') {
+    setStepState('download', 'done');
+    setStepState('extract', 'done');
+    setStepState('install', 'done');
+    doneMsg.style.display = '';
+    progressWrap.style.display = 'none';
+    btnStart.style.display = 'none';
+    btnSkip.style.display = 'none';
+  }
+});
+
+ipcRenderer.on('ffmpeg-setup-error', (_, message) => {
+  errorBox.style.display = '';
+  errorBox.textContent = '⚠ エラー: ' + message + '\n\n「スキップ」で続行し、後から手動でFFmpegを配置することもできます。';
+  btnStart.disabled = false;
+  btnStart.textContent = '再試行';
+  btnSkip.style.display = '';
+});
+
+btnStart.addEventListener('click', () => {
+  btnStart.disabled = true;
+  btnSkip.style.display = 'none';
+  errorBox.style.display = 'none';
+  ipcRenderer.send('start-ffmpeg-install');
+});
+
+btnSkip.addEventListener('click', () => {
+  ipcRenderer.send('skip-ffmpeg-install');
+});
+</script>
+</body>
+</html>
