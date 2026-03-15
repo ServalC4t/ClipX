@@ -48,7 +48,6 @@ UI auto-detects your OS language on launch. Switch manually anytime from the set
 | **Transitions** | Cut / Fade / Dissolve / Wipe |
 | **Stretch** | Auto 4:3 → 16:9 for FPS gameplay footage |
 | **X Presets** | Free, Premium, and fully custom |
-| **Quick post** | Opens X post screen automatically after export |
 | **Languages** | 12 languages, OS auto-detect |
 
 ---
