@@ -1,96 +1,78 @@
 # ClipX
 
-**複数のクリップを1本にまとめて、Xへ最速投稿。ゲーマーのためのクリップ編集ソフト。**
+**The fastest way to merge your game clips and post to X.**
 
-キルシーン、ハイライト、面白い瞬間——バラバラに録ったクリップをドラッグして並べるだけで、1本の動画に。無駄な操作ゼロ。
+Kill shots, highlights, funny moments — drag your clips, line them up, and export. No bloated timelines, no wasted time.
 
----
-
-## ダウンロード
-
-> **[⬇ ClipX をダウンロード](https://github.com/ServalC4t/ClipX/releases)**
-
-Windows対応 / インストーラー形式（.exe）
+> **[⬇ Download ClipX](https://github.com/ServalC4t/ClipX/releases)**
+>
+> Windows 10/11 · Installer (.exe) · FFmpeg auto-setup on first launch
 
 ---
 
-## なぜ ClipX なのか
+## Why ClipX?
 
-### 🎮 FPSゲーマーに最適な引き伸ばし対応
-CS2やVALORANTなど、4:3解像度でプレイしているゲーマーに嬉しい**自動引き伸ばし機能**搭載。
-1280x960や1024x768などの映像を、Xに最適な16:9に自動変換。黒帯なし・画質劣化なしで投稿できます。
+### 🎬 Built for merging multiple clips into one
+Drop in your clips, trim the fat, and stitch them together into a single highlight video. Add transitions between clips — cut, fade, dissolve, or wipe — with one click. Whether it's one sick clip or a full weekly highlights reel, ClipX handles it.
 
-### 🐦 Xに完全最適化されたプリセット
-Xの課金状態に合わせたプリセットをあらかじめ用意。
+### 🎮 FPS-ready stretch resolution
+Playing CS2, VALORANT, or any game in 4:3? ClipX automatically stretches 1280×960, 1024×768, and other 4:3 resolutions to 16:9 — the way it looks in-game, no black bars, no quality loss.
 
-| プラン | 時間 | サイズ | 解像度 |
-|--------|------|--------|--------|
-| 無料 | 140秒 | 512MB | 最大1080p |
-| プレミアム | 180秒 | 2GB | 最大1080p |
+### 🐦 Presets matched to your X subscription
+Stop guessing file size limits. ClipX ships with presets tuned for each X plan:
 
-プリセットの時間・サイズ・コーデック・ビットレートはすべて自由に変更可能。カスタムプリセットの追加にも対応しています。
+| Plan | Duration | File Size | Resolution |
+|------|----------|-----------|------------|
+| Free | 140s | 512 MB | up to 1080p |
+| Premium | 180s | 2 GB | up to 1080p |
 
-### 🎬 複数クリップをまとめるのに最適
-ゲーム中に録った複数のクリップを並べて、1本のハイライト動画に仕上げられます。
-タイムラインにクリップを並べてトリムするだけ。クリップ間にはフェード・ディゾルブ・ワイプなどのトランジションも追加可能。
-「あのシーンだけ切り取って投稿したい」も「今週のハイライトまとめ」も、これ1本で完結します。
+Every preset is fully editable — duration, bitrate, codec, resolution. Add your own custom presets too.
 
-### 🖱️ ドラッグ&ドロップで完結する直感操作
-ファイルをウィンドウに投げるだけで読み込み完了。タイムライン上でのクリップ並び替えもドラッグするだけ。
-複雑なメニュー操作は一切不要。**録る → 編集 → 投稿**の流れが最速で完結します。
+### 🖱️ Drag-and-drop everything
+Drop files into the app to load them. Drag clips on the timeline to reorder. No menus to dig through. **Record → Edit → Post** in the least amount of steps possible.
 
-### 🌍 12言語対応
-インターフェースはOS言語を自動検出して切り替え。手動での言語変更にも対応。
+### 🌍 12 languages supported
+UI auto-detects your OS language on launch. Switch manually anytime from the settings.
 
-日本語 / English / 中文 / 한국어 / Español / Français / Deutsch / Português / Русский / Italiano / Polski / Türkçe
+`EN` `JA` `ZH` `KO` `ES` `FR` `DE` `PT` `RU` `IT` `PL` `TR`
 
 ---
 
-## 機能一覧
+## Features
 
-- **対応フォーマット** — MP4, MOV, AVI, MKV, TS, FLV, M2TS, WMV, WebM
-- **クリップトリム** — タイムラインのハンドルをドラッグして直感的にカット
-- **複数クリップ編集** — クリップをつなげて1本の動画に
-- **トランジション** — カット / フェード / ディゾルブ / ワイプ
-- **4:3引き伸ばし** — FPS向け解像度を自動で16:9に変換
-- **Xプリセット** — 無料・プレミアム・カスタムに対応
-- **書き出し後すぐ投稿** — 完成したらXの投稿画面を自動で開く
-- **12言語対応** — OS言語の自動検出
+| | |
+|---|---|
+| **Formats** | MP4, MOV, AVI, MKV, TS, FLV, M2TS, WMV, WebM |
+| **Trim** | Drag handles on the timeline to cut in/out points |
+| **Multi-clip** | Join clips into one continuous video |
+| **Transitions** | Cut / Fade / Dissolve / Wipe |
+| **Stretch** | Auto 4:3 → 16:9 for FPS gameplay footage |
+| **X Presets** | Free, Premium, and fully custom |
+| **Quick post** | Opens X post screen automatically after export |
+| **Languages** | 12 languages, OS auto-detect |
 
 ---
 
-## 動作環境
+## Requirements
 
 - Windows 10 / 11
-- FFmpeg（初回起動時に自動セットアップ）
+- FFmpeg (auto-downloaded on first launch)
 
 ---
 
-## 開発者向け
-
-### セットアップ
+## Development
 
 ```bash
 npm install
-npm start
-
-# 開発モード（DevTools付き）
-npm run dev
+npm start        # run app
+npm run dev      # with DevTools
+npm run build    # build installer → dist/
 ```
 
-### ビルド
-
-```bash
-npm run build
-# dist/ にインストーラー生成
-```
-
-### 必要なもの
-- Node.js 18以上
-- FFmpeg（`ffmpeg/` フォルダに配置、またはPATHに追加）
+Requires Node.js 18+.
 
 ---
 
-## ライセンス
+## License
 
 MIT
