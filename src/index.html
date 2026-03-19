@@ -1115,7 +1115,7 @@ function togglePlay(){
       if(isLooping){vid.currentTime=m.trimStart;_playInRange=true;}
       else{_playInRange=false;}
     } else {
-      _playInRange=m?(vid.currentTime>=m.trimStart&&vid.currentTime<m.trimEnd):false;
+      _playInRange=true;
     }
     vid.play();
   } else {
