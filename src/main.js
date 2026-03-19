@@ -164,7 +164,7 @@ ipcMain.handle('export-clip', async (_, { clips, outputPath, preset, encoder }) 
   const maxW = preset.maxWidth || 1280, maxH = preset.maxHeight || 720;
 
   function scaleFilter(stretch) {
-    if (stretch) return `scale=${maxW}:${maxH}:force_original_aspect_ratio=increase,crop=${maxW}:${maxH},setsar=1`;
+    if (stretch) return `scale=${maxW}:${maxH},setsar=1`;
     return `scale='min(${maxW},iw)':'min(${maxH},ih)':force_original_aspect_ratio=decrease:flags=lanczos,setsar=1`;
   }
 

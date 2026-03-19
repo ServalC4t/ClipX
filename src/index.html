@@ -1381,7 +1381,7 @@ function setupTrimDrag(){
       else mat.trimEnd=Math.min(mat.duration,Math.max(t,mat.trimStart+FRAME*2));
       renderHandles(mat); updateStats(mat); updateWarn();
       const vid=$('preview-video');
-      if(vid.src&&(vid.currentTime<mat.trimStart||vid.currentTime>mat.trimEnd)) vid.currentTime=mat.trimStart;
+      if(trimDragging==='start'&&vid.src) vid.currentTime=mat.trimStart;
       if(!_trimRaf){_trimRaf=true;requestAnimationFrame(()=>{drawWaveform(mat);_trimRaf=false;});}
     }
   });
