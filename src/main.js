@@ -324,8 +324,12 @@ ipcMain.handle('extract-waveform', async (_, { filePath, samples }) => {
     const args = ['-i', filePath, '-ac', '1', '-ar', '8000', '-f', 'f32le', '-'];
     const proc = require('child_process').spawn(ffmpeg, args, { stdio: ['ignore','pipe','ignore'] });
     const chunks = [];
+    let settled = false;
+    const done = (result) => { if (!settled) { settled = true; resolve(result); } };
+    const killTimer = setTimeout(() => { try { proc.kill(); } catch(e) {} done([]); }, 30000);
     proc.stdout.on('data', d => chunks.push(d));
     proc.stdout.on('end', () => {
+      clearTimeout(killTimer);
       try {
         const buf = Buffer.concat(chunks);
         const total = buf.length / 4;
@@ -340,10 +344,10 @@ ipcMain.handle('extract-waveform', async (_, { filePath, samples }) => {
           }
           peaks.push(Math.min(1, max));
         }
-        resolve(peaks);
-      } catch(e) { resolve([]); }
+        done(peaks);
+      } catch(e) { done([]); }
     });
-    proc.on('error', () => resolve([]));
+    proc.on('error', () => { clearTimeout(killTimer); done([]); });
   });
 });
 

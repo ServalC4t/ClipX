@@ -1961,10 +1961,12 @@ function playNextClip(){
   activeMaterialId=mat.id;
   mat.trimStart=clip.trimStart;
   mat.trimEnd=clip.trimEnd;
-  renderComposition();
-  renderMaterials();
 
   const vid=$('preview-video');
+  // 前のクリップのハンドラーを必ずクリア
+  vid.ontimeupdate=null;
+  vid.onloadedmetadata=null;
+
   const trans=clip.transition||{id:'dissolve',duration:0.5};
   const hasTrans=previewAllIndex>0&&trans.id!=='cut';
   const transDur=(trans.duration||0.5)*1000;
@@ -1976,7 +1978,16 @@ function playNextClip(){
     $('time-badge').style.display='';
     if(clip.stretch169){vid.style.width='100%';vid.style.height='100%';vid.style.objectFit='fill';}
     else{vid.style.width='';vid.style.height='';vid.style.objectFit='contain';}
+
+    // onloadedmetadataが発火しない場合のフォールバック
+    const metaTimer=setTimeout(()=>{
+      vid.onloadedmetadata=null;
+      previewAllIndex++;
+      setTimeout(playNextClip,50);
+    },8000);
+
     vid.onloadedmetadata=()=>{
+      clearTimeout(metaTimer);
       vid.currentTime=clip.trimStart;
       applyAdjustmentsToPreview(clip.adjustments);
       // フェードイン
