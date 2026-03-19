@@ -661,7 +661,7 @@ const FPS=30, FRAME=1/FPS;
 // ===== STATE =====
 let settings=null, materials=[], composition=[], activeMaterialId=null, activeCompId=null, selectedPresetId=null;
 let trimDragging=null, middleDragging=false, middleDragStartX=0, middleDragStartS=0, middleDragStartE=0;
-let isLooping=false, continuousMode=true, lastOutputPath=null;
+let isLooping=false, continuousMode=true, lastOutputPath=null, _playInRange=false;
 let zoomLevel=1, zoomOffset=0, advancedMode=false, currentTab='general';
 let contextTargetId=null;
 let undoStack=[], redoStack=[];
@@ -941,8 +941,8 @@ function loadPreview(mat){
   vid.currentTime=mat.trimStart;
   vid.ontimeupdate=()=>{
     const m=activeMat(); if(!m) return;
-    if(isLooping&&vid.currentTime>=m.trimEnd){vid.currentTime=m.trimStart;return;}
-    if(!isLooping&&vid.currentTime>=m.trimEnd){vid.pause();}
+    if(isLooping&&_playInRange&&vid.currentTime>=m.trimEnd){vid.currentTime=m.trimStart;return;}
+    if(!isLooping&&_playInRange&&vid.currentTime>=m.trimEnd){vid.pause();_playInRange=false;}
     $('time-badge').textContent=`${fmt(vid.currentTime)} / ${fmt(m.trimEnd)}`;
     updateTimelinePlayhead(m);
     updateTelopOverlay(m,vid.currentTime);
@@ -1109,7 +1109,7 @@ function togglePlay(){
   if(!vid.src) return;
   if(vid.paused){
     const m=activeMat();
-    if(m&&(vid.currentTime>=m.trimEnd||vid.currentTime<m.trimStart)) vid.currentTime=m.trimStart;
+    _playInRange=m?(vid.currentTime>=m.trimStart&&vid.currentTime<m.trimEnd):false;
     vid.play();
   } else {
     vid.pause();
@@ -1619,6 +1619,11 @@ function renderComposition(){
           // クリップのテロップ設定を素材にも反映してトリムパネルに表示
           if(clip.telop) mat.telop=clip.telop;
           renderMaterials(); loadPreview(mat); showTrim(mat);
+          // クリップ単体を先頭から再生
+          const vid=$('preview-video');
+          _playInRange=true;
+          const doPlay=()=>{vid.currentTime=clip.trimStart;vid.play();};
+          vid.readyState>=2?doPlay():vid.addEventListener('canplay',doPlay,{once:true});
         }
         renderComposition();};
       card.querySelector('[data-ci]').onclick=e=>{e.stopPropagation();saveUndoState();composition=composition.filter(c=>c.id!==clip.id);renderComposition();updateWarn();};
