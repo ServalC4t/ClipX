@@ -1107,7 +1107,13 @@ function setupControls(){
 function togglePlay(){
   const vid=$('preview-video');
   if(!vid.src) return;
-  vid.paused?vid.play():vid.pause();
+  if(vid.paused){
+    const m=activeMat();
+    if(m&&(vid.currentTime>=m.trimEnd||vid.currentTime<m.trimStart)) vid.currentTime=m.trimStart;
+    vid.play();
+  } else {
+    vid.pause();
+  }
   $('ctrl-play').blur();
 }
 
