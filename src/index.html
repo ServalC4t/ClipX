@@ -1499,7 +1499,8 @@ function addToComposition(){
   composition.push(clip);
   activeCompId=clip.id;
   renderComposition(); updateWarn();
-  if(!continuousMode){mat.trimStart=0;mat.trimEnd=mat.duration;showTrim(mat);renderMaterials();}
+  mat.trimStart=0;mat.trimEnd=mat.duration;
+  renderHandles(mat);updateStats(mat);drawWaveform(mat);renderMaterials();
 }
 
 function renderComposition(){
