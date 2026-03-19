@@ -941,8 +941,8 @@ function loadPreview(mat){
   vid.currentTime=mat.trimStart;
   vid.ontimeupdate=()=>{
     const m=activeMat(); if(!m) return;
-    if(isLooping&&_playInRange&&vid.currentTime>=m.trimEnd){vid.currentTime=m.trimStart;return;}
-    if(!isLooping&&_playInRange&&vid.currentTime>=m.trimEnd){vid.pause();_playInRange=false;}
+    if(isLooping&&vid.currentTime>=m.trimEnd){vid.currentTime=m.trimStart;return;}
+    if(!isLooping&&vid.currentTime>=m.trimEnd){vid.pause();}
     $('time-badge').textContent=`${fmt(vid.currentTime)} / ${fmt(m.trimEnd)}`;
     updateTimelinePlayhead(m);
     updateTelopOverlay(m,vid.currentTime);
@@ -1109,7 +1109,6 @@ function togglePlay(){
   if(!vid.src) return;
   if(vid.paused){
     const m=activeMat();
-    _playInRange=m?(vid.currentTime>=m.trimStart&&vid.currentTime<m.trimEnd):false;
     vid.play();
   } else {
     vid.pause();
