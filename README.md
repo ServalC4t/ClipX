@@ -41,7 +41,7 @@ UI auto-detects your OS language on launch. Switch manually anytime from the set
 `EN` `JA` `ZH` `KO` `ES` `FR` `DE` `PT` `RU` `IT` `PL` `TR`
 
 If you enjoy this app, please consider supporting the project!  
-👉 [Ko-fi](https://ko-fi.com/servalc4t)
+👉 [Ko-fi](https://ko-fi.com/servalc4t)[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/ServalC4t)
 ---
 
 ## Features
