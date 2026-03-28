@@ -25,7 +25,8 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "ClipX"
+      "shortcutName": "ClipX",
+      "include": "build/installer.nsh"
     }
   },
   "devDependencies": {
